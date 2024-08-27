@@ -60,7 +60,6 @@ const HomeContextProvider = ({children}: ProviderProps) => {
         if (!newAudio) return;
         const audioContext = new AudioContext();
         const media = audioContext.createMediaElementSource(newAudio);
-        alert(media);
         const newGain = audioContext.createGain();
         media.connect(newGain);
         newGain.connect(audioContext.destination);
