@@ -5,7 +5,6 @@ import { createContext, ReactNode, RefObject, useEffect, useRef, useState } from
 type HomeContextData = {
     playing: boolean;
     volume: number;
-    audioRef: RefObject<HTMLAudioElement>;
     configPlayPause: () => void;
     configVolume: (value: number) => void;
 }
@@ -18,8 +17,7 @@ type ProviderProps = {
 
 const HomeContextProvider = ({children}: ProviderProps) => {
     const [playing, isPlaying] = useState(false);
-    const audioRef = useRef<HTMLAudioElement>(null);
-    const [audio, setAudio] = useState<HTMLAudioElement>(null);
+    const [audio, setAudio] = useState<HTMLAudioElement>();
     const [audioURL, setAudioURL] = useState(`audios/audio1.mp3`);
     const [volume, setVolume] = useState(1);
     const [gain, setGain] = useState<GainNode>();
@@ -45,32 +43,28 @@ const HomeContextProvider = ({children}: ProviderProps) => {
     }
 
     const play = () => {
-        const audio = audioRef.current;
         if (!audio) return;
         audio.play();
 
     }
 
     const pause = () => {
-        const audio = audioRef.current;
         if (!audio) return;
         audio.pause();
 
     }
 
     const configAudio = () => {
-        /*const newAudio = new Audio(audioURL);
-        alert("aqui");
-        //if (!audio) return;
-        alert("aqui 2");
+        const newAudio = new Audio(audioURL);
+        setAudio(newAudio);
+        if (!newAudio) return;
         const audioContext = new AudioContext();
-        alert("aqui 3");
         const media = audioContext.createMediaElementSource(newAudio);
+        alert(media);
         const newGain = audioContext.createGain();
         media.connect(newGain);
         newGain.connect(audioContext.destination);
-        setAudio(newAudio);
-        setGain(newGain);*/
+        setGain(newGain);
     }
 
     return (
@@ -78,7 +72,6 @@ const HomeContextProvider = ({children}: ProviderProps) => {
             {
                 playing,
                 volume,
-                audioRef,
                 configPlayPause,
                 configVolume
             }

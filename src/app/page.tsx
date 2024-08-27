@@ -8,13 +8,11 @@ export default function Home() {
   const {
     playing,
     volume,
-    audioRef,
     configPlayPause,
     configVolume
   } = useContext(HomeContext);
   return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-          <audio src="audios/audio1.mp3" controls ref={audioRef}></audio>
           <button onClick={() => configPlayPause()}>
            {
              playing ? (<FaPause />) : (<FaPlay />)
